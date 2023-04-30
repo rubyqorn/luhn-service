@@ -18,3 +18,7 @@ message LuhnServiceResponse {
 service Luhn {
     rpc Validate (LuhnServiceRequest) returns (LuhnServiceResponse) {}
 }
+
+// grpcurl --plaintext \                                    
+// -d '{"card": {"number": 3751844717399711} }' \
+// localhost:8080 luhn.service.Luhn/Validate
