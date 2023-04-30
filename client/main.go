@@ -12,12 +12,8 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-type Card struct {
-	Number int64
-}
-
 func main() {
-	creditCardNumber := flag.Int64("creditCardNumber", 0, "int64")
+	creditCardNumber := flag.Int64("creditCardNumber", -1, "4556456664280678")
 	flag.Parse()
 
 	resource := utils.GetEnvVariable("HOST") + utils.GetEnvVariable("PORT")
