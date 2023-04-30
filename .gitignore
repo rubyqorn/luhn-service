@@ -1,3 +1,6 @@
 .env
 go.sum
+go.work.sum
 server/go.sum
+client/go.sum
+utils/go.sum

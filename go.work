@@ -1,3 +1,7 @@
 go 1.18
 
-use ./server
+use (
+	./client
+	./server
+	./utils
+)

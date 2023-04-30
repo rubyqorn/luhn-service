@@ -2,18 +2,15 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net"
-	"os"
-	"path/filepath"
 
-	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
 	card "luhn-service/server/card"
 	pb "luhn-service/server/proto"
+	utils "luhn-service/utils"
 )
 
 type grpcServer struct {
@@ -27,32 +24,14 @@ func (server *grpcServer) Validate(ctx context.Context, request *pb.LuhnServiceR
 		log.Fatalf("failed to validate %v", err)
 	}
 
-	fmt.Println(isValid, request.Card.Number)
-
 	return &pb.LuhnServiceResponse{Valid: isValid}, nil
 }
 
-func getEnvVariable(variableName string) string {
-	path, err := filepath.Abs("../.env")
-
-	if err != nil {
-		log.Fatalf("Env file not found")
-	}
-
-	loadErr := godotenv.Load(path)
-
-	if loadErr != nil {
-		log.Fatalf("Error loading .env file")
-	}
-
-	return os.Getenv(variableName)
-}
-
 func main() {
-	listenedServer, err := net.Listen(getEnvVariable("PROTOCOL"), getEnvVariable("PORT"))
+	listenedServer, err := net.Listen(utils.GetEnvVariable("PROTOCOL"), utils.GetEnvVariable("PORT"))
 
 	if err != nil {
-		log.Fatalf("failed to listen: %v, %v, %v", err, getEnvVariable("PROTOCOL"), getEnvVariable("PORT"))
+		log.Fatalf("failed to listen: %v", err)
 	}
 
 	newGrpcServer := grpc.NewServer()
