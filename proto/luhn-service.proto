@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package luhn.service;
+option go_package = "luhn_service/pb";
+
+message Card {
+    int64 number = 1;
+}
+
+message LuhnServiceRequest {
+    Card card = 1;
+}
+
+message LuhnServiceResponse {
+    bool valid = 1;
+}
+
+service Luhn {
+    rpc Validate (LuhnServiceRequest) returns (LuhnServiceResponse) {}
+}
